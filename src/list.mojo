@@ -40,6 +40,18 @@ struct List[T: AnyType]:
         self.capacity = previous.capacity
         self.storage = previous.storage
     
+    fn copy(self) -> Self:
+        let new = Self()
+        new.reserve_capacity(self.count)
+        for item in self: new.append(item)
+    
+    # REQUIRES(Traits) where T: Eq
+    # fn __eq__(self, rhs: Self) -> Bool:
+    #     if self.count != rhs.count: return False
+    #     for i in range(self.count):
+    #         if self[i] == rhs[i]: return False
+    #     return True
+    
     # this is currently impossible to safely automate
     # while maintaining iterator support
     # at least I could not find a way
@@ -69,6 +81,10 @@ struct List[T: AnyType]:
     
     fn drop_last(inout self):
         self.count -= 1
+    
+    fn remove_last(inout self) -> T:
+        self.count -= 1
+        return self[self.count]
     
     fn reserve_capacity(inout self, capacity: Int):
         if self.capacity < capacity:
@@ -109,6 +125,23 @@ struct List[T: AnyType]:
         for item in self:
             acc = body(acc, item)
         return acc
+    
+    fn zip[A: AnyType, B: AnyType](self, `with`: List[A], body: fn(A, T) capturing -> B) -> List[B]:
+        var least = 0
+        if self.count < `with`.count: least = self.count else: least = `with`.count
+        var buf = List[B]()
+        buf.reserve_capacity(least)
+        for i in range(least):
+            buf.append(body(`with`[i], self[i]))
+    
+    fn zip[A: AnyType, B: AnyType](self, `with`: List[A], body: fn(A, T) -> B) -> List[B]:
+        var least = 0
+        if self.count < `with`.count: least = self.count else: least = `with`.count
+        var buf = List[B]()
+        buf.reserve_capacity(least)
+        for i in range(least):
+            buf.append(body(`with`[i], self[i]))
+            
 
 struct ListIterator[T: AnyType]:
     var offset: Int

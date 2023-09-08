@@ -69,4 +69,3 @@ fn test_fold():
     print(folded)
     
     list.free()
-    
