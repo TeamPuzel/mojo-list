@@ -46,9 +46,10 @@ struct List[T: AnyType]:
         self.storage = previous.storage
     
     fn copy(self) -> Self:
-        let new = Self()
+        var new = Self()
         new.reserve_capacity(self.count)
         for item in self: new.append(item)
+        return new^
     
     fn is_empty(self) -> Bool: return self.count == 0
     
@@ -140,8 +141,9 @@ struct List[T: AnyType]:
         self.count += 1
     
     fn first(self) -> T: return self[0]
-    fn last(self) -> T: return self[self.count - 1]
+    fn last(self) -> T: return self[self.last_index()]
     
+    @always_inline
     fn last_index(self) -> Int: return self.count - 1
     
     fn reversed(self) -> Self:

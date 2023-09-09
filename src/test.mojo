@@ -10,6 +10,10 @@ fn main():
     test_option()
     spacer()
     
+    print("\n - COPY")
+    test_copy()
+    spacer()
+    
     print("\n - APPEND:")
     test_append()
     spacer()
@@ -46,6 +50,12 @@ fn test_append():
     list.append(test)
     
     for item in list: print_no_newline(item, " ")
+
+fn test_copy():
+    let list = List[Int]([2, 2, 2])
+    let a_copy = list.copy()
+    
+    for item in a_copy: print_no_newline(item, " ")
 
 fn test_map():
     fn square(num: Int) -> Int: return num * num
