@@ -1,4 +1,4 @@
-### A basic resizable List implementation for Mojo
+### A basic resizable and reference counted List implementation for Mojo
 Supporting `for .. in` iteration and many convenience methods such as `map`, `append`, `insert`, `remove`, `reverse`, `reversed`, `filter`, `fold`, `zip` etc.
 
 It's still work in progress so there might be some issues, some seem to crash the compiler.
