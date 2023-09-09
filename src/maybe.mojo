@@ -1,19 +1,19 @@
 
-struct Optional[T: AnyType]:
-    var maybe_value: T
+struct Maybe[T: AnyType]:
+    var raw_value: T
     var wrapping: Bool
     
     fn __init__(inout self):
-        self.maybe_value = rebind[T, Int](0)
+        self.raw_value = rebind[T, Int](0)
         self.wrapping = False
     
     fn __init__(inout self, owned value: T):
-        self.maybe_value = value
+        self.raw_value = value
         self.wrapping = True
     
     fn unwrap(self) -> T:
         debug_assert(self.is_some(), "Unwrapped a none value")
-        return self.maybe_value
+        return self.raw_value
     
     fn is_some(self) -> Bool: return self.wrapping
     fn is_none(self) -> Bool: return not self.wrapping

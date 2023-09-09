@@ -1,13 +1,13 @@
 
 from list import List
-from optional import Optional
+from maybe import Maybe
 from testing import *
 
 fn spacer(): print("")
 
 fn main():
-    print("\n - OPTIONAL")
-    test_option()
+    print("\n - MAYBE")
+    test_maybe()
     spacer()
     
     print("\n - COPY")
@@ -116,12 +116,12 @@ fn test_prefix():
     
     for item in first_three: print_no_newline(item, " ")
 
-fn test_option():
+fn test_maybe():
     fn try_print(value: Int): print(value)
     fn handle_none(): print("Oh no, no value!")
     
-    let wrapped = Optional[Int](1)
-    let none = Optional[Int]()
+    let wrapped = Maybe[Int](1)
+    let none = Maybe[Int]()
     
     wrapped.if_some(try_print)
     none.if_some(try_print)

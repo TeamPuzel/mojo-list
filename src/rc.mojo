@@ -1,6 +1,6 @@
 
 from memory.unsafe import Pointer
-from optional import Optional
+from maybe import Maybe
 
 # not sure why I had to use 2 pointers
 # but Mojo did not let me have nested generics
@@ -64,9 +64,9 @@ struct WeakRcPointer[T: AnyType]:
     
     fn is_valid(self) -> Bool: return self.storage == Pointer[T].get_null()
     
-    fn try_load(self, index: Int) -> Optional[T]:
-        if self.is_valid(): return Optional[T](self.storage.load(index))
-        else: return Optional[T]()
+    fn try_load(self, index: Int) -> Maybe[T]:
+        if self.is_valid(): return Maybe[T](self.storage.load(index))
+        else: return Maybe[T]()
     
     fn try_store(self, index: Int, value: T) -> Bool:
         if self.is_valid():

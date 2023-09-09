@@ -1,6 +1,6 @@
 
 from rc import RcPointer
-from optional import Optional
+from maybe import Maybe
 
 struct List[T: AnyType]:
     var storage: RcPointer[T]
@@ -78,15 +78,15 @@ struct List[T: AnyType]:
     fn prefix(self, count: Int) -> Self:
         return self.subrange(0, count)
     
-    fn first(self, where: fn(T) -> Bool) -> Optional[T]:
+    fn first(self, where: fn(T) -> Bool) -> Maybe[T]:
         for item in self:
             if where(item): return item
-        return Optional[T]()
+        return Maybe[T]()
     
-    fn first(self, where: fn(T) capturing -> Bool) -> Optional[T]:
+    fn first(self, where: fn(T) capturing -> Bool) -> Maybe[T]:
         for item in self:
             if where(item): return item
-        return Optional[T]()
+        return Maybe[T]()
     
     fn all_satisfy(self, predicate: fn(T) -> Bool) -> Bool:
         for item in self:
