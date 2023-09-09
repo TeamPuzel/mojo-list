@@ -66,6 +66,13 @@ struct List[T: AnyType]:
     #         if self[i] == rhs[i]: return False
     #     return True
     
+    fn prefix(self, `from`: Int, count: Int) -> Self:
+        var buf = Self()
+        buf.reserve_capacity(self.count)
+        for i in range(`from`, `from` + count):
+            buf.append(self[i])
+        return buf^
+    
     fn first(self, where: fn(T) -> Bool) -> Optional[T]:
         for item in self:
             if where(item): return item
