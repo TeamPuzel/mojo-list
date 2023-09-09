@@ -80,12 +80,12 @@ struct List[T: AnyType]:
     
     fn first(self, where: fn(T) -> Bool) -> Maybe[T]:
         for item in self:
-            if where(item): return item
+            if where(item): return Maybe[T](item)
         return Maybe[T]()
     
     fn first(self, where: fn(T) capturing -> Bool) -> Maybe[T]:
         for item in self:
-            if where(item): return item
+            if where(item): return Maybe[T](item)
         return Maybe[T]()
     
     fn all_satisfy(self, predicate: fn(T) -> Bool) -> Bool:
