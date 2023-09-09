@@ -1,6 +1,8 @@
 ### A basic resizable and reference counted List implementation for Mojo
 Supporting `for .. in` iteration and many convenience methods such as `map`, `append`, `insert`, `remove`, `reverse`, `reversed`, `filter`, `fold`, `zip` etc.
 
+Also includes an implementation of `Optional` and `RcPointer` which were required by the list.
+
 It's still work in progress so there might be some issues, some seem to crash the compiler.
 
 examples:
