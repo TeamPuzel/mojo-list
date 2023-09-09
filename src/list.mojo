@@ -1,5 +1,6 @@
 
 from rc import RcPointer
+from optional import Optional
 
 struct List[T: AnyType]:
     var storage: RcPointer[T]
@@ -56,11 +57,18 @@ struct List[T: AnyType]:
     #         if self[i] == rhs[i]: return False
     #     return True
     
-    # fn __del__(owned self): pass
-        # self.storage.free()
-    # this is necessary
-    # fn free(self):
-    #     self.storage.free()
+    fn first(self, where: fn(T) -> Bool) -> Optional[T]:
+        for item in self:
+            if where(item): return item
+        return Optional[T]()
+    
+    fn first(self, where: fn(T) capturing -> Bool) -> Optional[T]:
+        for item in self:
+            if where(item): return item
+        return Optional[T]()
+    
+    # REQUIRES(Traits) where T: Eq
+    # fn first_index(self, of: T) -> Int:
     
     fn resize(inout self, by: Int):
         let new_capacity = self.capacity + by
@@ -174,7 +182,6 @@ struct List[T: AnyType]:
             buf.append(body(`with`[i], self[i]))
         return buf^
             
-
 struct ListIterator[T: AnyType]:
     var offset: Int
     var max: Int
@@ -192,4 +199,7 @@ struct ListIterator[T: AnyType]:
         let ret = self.storage.load(self.offset)
         self.offset += 1
         return ret
-    
+
+# REQUIRES(Traits)
+# struct LazyList[T: AnyType]:
+#    var list: List[T]

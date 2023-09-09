@@ -1,9 +1,15 @@
 
 from list import List
+from optional import Optional
+from testing import *
 
 fn spacer(): print("")
 
 fn main():
+    print("\n - OPTIONAL")
+    test_option()
+    spacer()
+    
     print("\n - APPEND:")
     test_append()
     spacer()
@@ -26,7 +32,6 @@ fn main():
     
     print("\n - ZIP:")
     test_zip()
-    
     spacer()
 
 fn test_append():
@@ -81,11 +86,24 @@ fn test_reversed():
     for item in reversed: print_no_newline(item, " ")
 
 fn test_zip():
-    fn double(left: Int, right: Int) -> Int: return left * right
+    fn multiply(left: Int, right: Int) -> Int: return left * right
     
     let list1 = List[Int]([1, 2, 3])
     let list2 = List[Int]([1, 4, 8])
     
-    let list3 = list1.zip[Int, Int](list2, double)
+    let list3 = list1.zip[Int, Int](list2, multiply)
     
     for item in list3: print_no_newline(item, " ")
+
+fn test_option():
+    fn try_print(value: Int): print(value)
+    fn handle_none(): print("Oh no, no value!")
+    
+    let wrapped = Optional[Int](1)
+    let none = Optional[Int]()
+    
+    wrapped.if_some(try_print)
+    none.if_some(try_print)
+    
+    wrapped.if_none(handle_none)
+    none.if_none(handle_none)

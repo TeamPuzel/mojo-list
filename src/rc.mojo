@@ -5,6 +5,8 @@ from memory.unsafe import Pointer
 # but Mojo did not let me have nested generics
 # and still store into the pointer.
 struct RcPointer[T: AnyType]:
+    # Modifying this externally is undefined
+    # which is currently not possible to enforce
     var references: Pointer[Int]
     var storage: Pointer[T]
     
