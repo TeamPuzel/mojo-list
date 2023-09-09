@@ -19,13 +19,13 @@ fn test_append():
     # outputs 1 2 3 4 5 2 2 2
 
 fn test_map():
-    fn double(num: Int) -> Int: return num * num
+    fn square(num: Int) -> Int: return num * num
     
     let list = List[Int]([2, 2, 2])
-    let doubled = list.map[Int](double)
+    let squared = list.map[Int](square)
     
     for item in list: print(item)
-    for item in doubled: print(item)
+    for item in squared: print(item)
     # outputs 2 2 2 and 4 4 4
 
 fn test_fold():
