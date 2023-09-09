@@ -33,6 +33,10 @@ fn main():
     print("\n - ZIP:")
     test_zip()
     spacer()
+    
+    print("\n - PREFIX")
+    test_prefix()
+    spacer()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -94,6 +98,13 @@ fn test_zip():
     let list3 = list1.zip[Int, Int](list2, multiply)
     
     for item in list3: print_no_newline(item, " ")
+
+fn test_prefix():    
+    let list = List[Int]([1, 2, 3, 4, 5, 6, 7, 8])
+    
+    let first_three = list.prefix(3)
+    
+    for item in first_three: print_no_newline(item, " ")
 
 fn test_option():
     fn try_print(value: Int): print(value)
