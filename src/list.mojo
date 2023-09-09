@@ -50,6 +50,15 @@ struct List[T: AnyType]:
         new.reserve_capacity(self.count)
         for item in self: new.append(item)
     
+    fn is_empty(self) -> Bool: return self.count == 0
+    
+    fn enumerated(self) -> List[(Int, T)]:
+        var buf = List[(Int, T)]()
+        buf.reserve_capacity(self.count)
+        for i in range(self.count):
+            buf.append((i, self[i]))
+        return buf^
+    
     # REQUIRES(Traits) where T: Eq
     # fn __eq__(self, rhs: Self) -> Bool:
     #     if self.count != rhs.count: return False
@@ -67,8 +76,21 @@ struct List[T: AnyType]:
             if where(item): return item
         return Optional[T]()
     
+    fn all_satisfy(self, predicate: fn(T) -> Bool) -> Bool:
+        for item in self:
+            if not predicate(item): return False
+        return True
+    
+    fn all_satisfy(self, predicate: fn(T) capturing -> Bool) -> Bool:
+        for item in self:
+            if not predicate(item): return False
+        return True
+    
     # REQUIRES(Traits) where T: Eq
     # fn first_index(self, of: T) -> Int:
+    
+    # REQUIRES(Traits) where T: Eq
+    # fn contains(self, value: T) -> Bool:
     
     fn resize(inout self, by: Int):
         let new_capacity = self.capacity + by
