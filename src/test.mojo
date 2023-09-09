@@ -21,9 +21,6 @@ fn test_append():
     list.append(test)
     
     for item in list: print(item)
-    
-    list.free()
-    test.free()
 
 fn test_map():
     fn double(num: Int) -> Int: return num * num
@@ -35,9 +32,6 @@ fn test_map():
     for item in list: print(item)
     print("Doubled:")
     for item in doubled: print(item)
-    
-    list.free()
-    doubled.free()
 
 fn test_filter():
     fn greater(num: Int) -> Bool: return num > 2
@@ -49,9 +43,6 @@ fn test_filter():
     for item in list: print(item)
     print("Filtered:")
     for item in filtered: print(item)
-    
-    list.free()
-    filtered.free()
 
 fn test_fold():
     fn sum(acc: Int, val: Int) -> Int: return acc + val
@@ -63,8 +54,6 @@ fn test_fold():
     for item in list: print(item)
     print("Folded:")
     print(folded)
-    
-    list.free()
 
 fn test_reversed():
     let list = List[Int]([1, 2, 3])
@@ -75,5 +64,3 @@ fn test_reversed():
     print("Reversed:")
     for item in reversed: print(item)
     
-    list.free()
-    reversed.free()

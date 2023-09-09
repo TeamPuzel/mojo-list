@@ -8,6 +8,18 @@ struct RcPointer[T: AnyType]:
     var references: Pointer[Int]
     var storage: Pointer[T]
     
+    fn __init__(inout self, value: Pointer[T], count: Int):
+        self.references = Pointer[Int].alloc(1)
+        self.references.store(0, 1)
+        self.storage = Pointer[T].alloc(count)
+        for i in range(count):
+            self.storage.store(i, value.load(i))
+    
+    fn __init__(inout self, capacity: Int):
+        self.references = Pointer[Int].alloc(1)
+        self.references.store(0, 1)
+        self.storage = Pointer[T].alloc(capacity)
+    
     fn __init__(inout self, value: T):
         self.references = Pointer[Int].alloc(1)
         self.references.store(0, 1)
@@ -24,3 +36,9 @@ struct RcPointer[T: AnyType]:
         if self.references.load(0) <= 0:
             self.references.free()
             self.storage.free()
+    
+    fn load(self, index: Int) -> T:
+        return self.storage.load(index)
+    
+    fn store(self, index: Int, value: T):
+        self.storage.store(index, value)

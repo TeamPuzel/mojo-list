@@ -3,33 +3,30 @@ from memory.unsafe import Pointer
 from rc import RcPointer
 
 struct List[T: AnyType]:
-    var storage: Pointer[T]
+    var storage: RcPointer[T]
     var count: Int
     var capacity: Int
     
     fn __init__(inout self):
         self.count = 0
         self.capacity = 10
-        self.storage = Pointer[T].alloc(10)
+        self.storage = RcPointer[T](10)
     
     # where T: Copy
     fn __init__(inout self, repeating: T, count: Int):
         self.count = count
         self.capacity = count
-        self.storage = Pointer[T].alloc(count)
+        self.storage = RcPointer[T](count)
         for i in range(count): self.storage.store(i, repeating)
     
     fn __init__[*Ts: AnyType](inout self, owned literal: ListLiteral[Ts]):
         let req_len = len(literal)
-        if req_len == 0:
-            self = Self()
-        else:
-            self.count = req_len
-            self.capacity = req_len
-            self.storage = Pointer[T].alloc(req_len)
-            let src = Pointer.address_of(literal).bitcast[T]()
-            for i in range(req_len):
-                self.storage.store(i, src.load(i))
+        self.count = req_len
+        self.capacity = req_len
+        self.storage = RcPointer[T](req_len)
+        let src = Pointer.address_of(literal).bitcast[T]()
+        for i in range(req_len):
+            self.storage.store(i, src.load(i))
               
     fn __getitem__(self, i: Int) -> T:
         return self.storage.load(i)
@@ -60,18 +57,17 @@ struct List[T: AnyType]:
     #         if self[i] == rhs[i]: return False
     #     return True
     
-    fn __del__(owned self): pass
+    # fn __del__(owned self): pass
         # self.storage.free()
     # this is necessary
-    fn free(self):
-        self.storage.free()
+    # fn free(self):
+    #     self.storage.free()
     
     fn resize(inout self, by: Int):
         let new_capacity = self.capacity + by
-        let new = Pointer[T].alloc(new_capacity)
+        let new = RcPointer[T](new_capacity)
         for i in range(self.count):
             new.store(i, self.storage.load(i))
-        self.storage.free()
         self.storage = new
         self.capacity = new_capacity
     
@@ -181,9 +177,9 @@ struct List[T: AnyType]:
 struct ListIterator[T: AnyType]:
     var offset: Int
     var max: Int
-    var storage: Pointer[T]
+    var storage: RcPointer[T]
     
-    fn __init__(inout self, storage: Pointer[T], max: Int):
+    fn __init__(inout self, storage: RcPointer[T], max: Int):
         self.offset = 0
         self.max = max
         self.storage = storage
