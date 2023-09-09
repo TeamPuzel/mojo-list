@@ -1,19 +1,33 @@
 
 from list import List
 
+fn spacer(): print("")
+
 fn main():
-    print("APPEND:")
+    print("\n - APPEND:")
     test_append()
-    print("MAP:")
+    spacer()
+    
+    print("\n - MAP:")
     test_map()
-    print("FILTER:")
+    spacer()
+    
+    print("\n - FILTER:")
     test_filter()
-    print("FOLD:")
+    spacer()
+    
+    print("\n - FOLD:")
     test_fold()
-    print("REVERSED:")
+    spacer()
+    
+    print("\n - REVERSED:")
     test_reversed()
-    print("ZIP:")
+    spacer()
+    
+    print("\n - ZIP:")
     test_zip()
+    
+    spacer()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -22,18 +36,18 @@ fn test_append():
     list.append(5)
     list.append(test)
     
-    for item in list: print(item)
+    for item in list: print_no_newline(item, " ")
 
 fn test_map():
-    fn double(num: Int) -> Int: return num * num
+    fn square(num: Int) -> Int: return num * num
     
     let list = List[Int]([2, 2, 2])
-    let doubled = list.map[Int](double)
+    let squared = list.map[Int](square)
     
     print("List:")
-    for item in list: print(item)
-    print("Doubled:")
-    for item in doubled: print(item)
+    for item in list: print_no_newline(item, " ")
+    print("\nSquared:")
+    for item in squared: print_no_newline(item, " ")
 
 fn test_filter():
     fn greater(num: Int) -> Bool: return num > 2
@@ -42,9 +56,9 @@ fn test_filter():
     let filtered = list.filter(greater)
     
     print("List:")
-    for item in list: print(item)
-    print("Filtered:")
-    for item in filtered: print(item)
+    for item in list: print_no_newline(item, " ")
+    print("\nFiltered:")
+    for item in filtered: print_no_newline(item, " ")
 
 fn test_fold():
     fn sum(acc: Int, val: Int) -> Int: return acc + val
@@ -53,25 +67,25 @@ fn test_fold():
     let folded = list.fold[Int](0, sum)
     
     print("List:")
-    for item in list: print(item)
-    print("Folded:")
-    print(folded)
+    for item in list: print_no_newline(item, " ")
+    print("\nFolded:")
+    print_no_newline(folded)
 
 fn test_reversed():
     let list = List[Int]([1, 2, 3])
     let reversed = list.reversed()
     
     print("List:")
-    for item in list: print(item)
-    print("Reversed:")
-    for item in reversed: print(item)
+    for item in list: print_no_newline(item, " ")
+    print("\nReversed:")
+    for item in reversed: print_no_newline(item, " ")
 
 fn test_zip():
-    fn multiply(left: Int, right: Int) -> Int: return left * right
+    fn double(left: Int, right: Int) -> Int: return left * right
     
     let list1 = List[Int]([1, 2, 3])
     let list2 = List[Int]([1, 4, 8])
     
-    let list3 = list1.zip[Int, Int](list2, multiply)
+    let list3 = list1.zip[Int, Int](list2, double)
     
-    for item in list3: print(item)
+    for item in list3: print_no_newline(item, " ")

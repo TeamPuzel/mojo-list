@@ -1,5 +1,4 @@
 
-from memory.unsafe import Pointer
 from rc import RcPointer
 
 struct List[T: AnyType]:
