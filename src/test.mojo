@@ -10,6 +10,8 @@ fn main():
     test_filter()
     print("FOLD:")
     test_fold()
+    print("REVERSED:")
+    test_reversed()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -18,8 +20,7 @@ fn test_append():
     list.append(5)
     list.append(test)
     
-    for item in list:
-        print(item)
+    for item in list: print(item)
     
     list.free()
     test.free()
@@ -31,11 +32,9 @@ fn test_map():
     let doubled = list.map[Int](double)
     
     print("List:")
-    for item in list:
-        print(item)
+    for item in list: print(item)
     print("Doubled:")
-    for item in doubled:
-        print(item)
+    for item in doubled: print(item)
     
     list.free()
     doubled.free()
@@ -47,11 +46,9 @@ fn test_filter():
     let filtered = list.filter(greater)
     
     print("List:")
-    for item in list:
-        print(item)
+    for item in list: print(item)
     print("Filtered:")
-    for item in filtered:
-        print(item)
+    for item in filtered: print(item)
     
     list.free()
     filtered.free()
@@ -63,9 +60,20 @@ fn test_fold():
     let folded = list.fold[Int](0, sum)
     
     print("List:")
-    for item in list:
-        print(item)
+    for item in list: print(item)
     print("Folded:")
     print(folded)
     
     list.free()
+
+fn test_reversed():
+    let list = List[Int]([1, 2, 3])
+    let reversed = list.reversed()
+    
+    print("List:")
+    for item in list: print(item)
+    print("Reversed:")
+    for item in reversed: print(item)
+    
+    list.free()
+    reversed.free()

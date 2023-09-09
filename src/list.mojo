@@ -1,5 +1,6 @@
 
 from memory.unsafe import Pointer
+from rc import RcPointer
 
 struct List[T: AnyType]:
     var storage: Pointer[T]
@@ -10,6 +11,13 @@ struct List[T: AnyType]:
         self.count = 0
         self.capacity = 10
         self.storage = Pointer[T].alloc(10)
+    
+    # where T: Copy
+    fn __init__(inout self, repeating: T, count: Int):
+        self.count = count
+        self.capacity = count
+        self.storage = Pointer[T].alloc(count)
+        for i in range(count): self.storage.store(i, repeating)
     
     fn __init__[*Ts: AnyType](inout self, owned literal: ListLiteral[Ts]):
         let req_len = len(literal)
@@ -52,9 +60,6 @@ struct List[T: AnyType]:
     #         if self[i] == rhs[i]: return False
     #     return True
     
-    # this is currently impossible to safely automate
-    # while maintaining iterator support
-    # at least I could not find a way
     fn __del__(owned self): pass
         # self.storage.free()
     # this is necessary
@@ -85,6 +90,36 @@ struct List[T: AnyType]:
     fn remove_last(inout self) -> T:
         self.count -= 1
         return self[self.count]
+    
+    fn remove(inout self, at: Int):
+        for i in range(at, self.last_index()):
+            self[i - 1] = self[i]
+        self.count -= 1
+    
+    fn insert(inout self, value: T, at: Int):
+        if self.count >= self.capacity: self.resize(self.capacity * 2)
+        for i in range(self.last_index(), at):
+            self[i + 1] = self[i]
+        self[at] = value
+        self.count += 1
+    
+    fn first(self) -> T: return self[0]
+    fn last(self) -> T: return self[self.count - 1]
+    
+    fn last_index(self) -> Int: return self.count - 1
+    
+    fn reversed(self) -> Self:
+        var buf = Self()
+        buf.reserve_capacity(self.count)
+        buf.count = self.count
+        
+        var offset: Int = self.last_index()
+        for item in self:
+            buf[offset] = item
+            offset -= 1
+        return buf^
+    
+    fn reverse(inout self): self = self.reversed()
     
     fn reserve_capacity(inout self, capacity: Int):
         if self.capacity < capacity:
