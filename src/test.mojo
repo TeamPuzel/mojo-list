@@ -12,6 +12,8 @@ fn main():
     test_fold()
     print("REVERSED:")
     test_reversed()
+    print("ZIP:")
+    test_zip()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -63,4 +65,13 @@ fn test_reversed():
     for item in list: print(item)
     print("Reversed:")
     for item in reversed: print(item)
+
+fn test_zip():
+    fn multiply(left: Int, right: Int) -> Int: return left * right
     
+    let list1 = List[Int]([1, 2, 3])
+    let list2 = List[Int]([1, 4, 8])
+    
+    let list3 = list1.zip[Int, Int](list2, multiply)
+    
+    for item in list3: print(item)

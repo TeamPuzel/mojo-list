@@ -164,6 +164,7 @@ struct List[T: AnyType]:
         buf.reserve_capacity(least)
         for i in range(least):
             buf.append(body(`with`[i], self[i]))
+        return buf^
     
     fn zip[A: AnyType, B: AnyType](self, `with`: List[A], body: fn(A, T) -> B) -> List[B]:
         var least = 0
@@ -172,6 +173,7 @@ struct List[T: AnyType]:
         buf.reserve_capacity(least)
         for i in range(least):
             buf.append(body(`with`[i], self[i]))
+        return buf^
             
 
 struct ListIterator[T: AnyType]:
