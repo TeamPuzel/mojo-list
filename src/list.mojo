@@ -53,6 +53,7 @@ struct List[T: AnyType]:
     
     fn is_empty(self) -> Bool: return self.count == 0
     
+    # Note this is not especially efficient without the lazy list
     fn enumerated(self) -> List[(Int, T)]:
         var buf = List[(Int, T)]()
         buf.reserve_capacity(self.count)
@@ -174,6 +175,12 @@ struct List[T: AnyType]:
         buf.reserve_capacity(self.count)
         for item in self: buf.append(body(item))
         return buf^
+    
+    fn for_each(self, body: fn(T) capturing -> None):
+        for item in self: body(item)
+    
+    fn for_each(self, body: fn(T) -> None):
+        for item in self: body(item)
     
     fn filter(self, body: fn(T) capturing -> Bool) -> List[T]:
         var buf = List[T]()
