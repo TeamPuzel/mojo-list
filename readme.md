@@ -6,7 +6,7 @@ Also includes an implementation of `Optional` and `RcPointer` which were require
 It's still work in progress so there might be some issues, some seem to crash the compiler.
 
 examples:
-```py
+```nim
 
 from list import List
 
