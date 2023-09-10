@@ -3,7 +3,7 @@ Supporting `for .. in` iteration and many convenience methods such as `map`, `ap
 
 Also includes an implementation of `Optional` and `RcPointer` which were required by the list.
 
-It's still work in progress so there might be some issues, some seem to crash the compiler.
+You can see examples of how it can be used by looking in "test.mojo".
 
 examples:
 ```nim

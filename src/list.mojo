@@ -3,7 +3,7 @@ from rc import RcPointer
 from maybe import Maybe
 
 # TASKS:
-# [ ] - Figure out why insert and friends are getting ub
+# [x] - Figure out why insert and friends are getting ub
 # [ ] - Write tests for all features
 # [ ] - Optimize many of the methods
 # [ ] - Implement a lazy list to help avoid copying
