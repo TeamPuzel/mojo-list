@@ -146,7 +146,6 @@ struct List[T: AnyType]:
         let last = self.last_index()
         self.count -= 1
         for i in range(at, last):
-            if i == last: continue
             self[i] = self[i + 1]
     
     fn swap_remove(inout self, at: Int):
