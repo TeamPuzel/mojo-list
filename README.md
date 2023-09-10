@@ -11,11 +11,10 @@ examples:
 from list import List
 
 fn test_append():
-    let test = List[Int]([2, 2, 2])
-    var list = List[Int]([1, 2, 3, 4])
+    var list: List[Int] = [1, 2, 3, 4]
     
     list.append(5)
-    list.append(test)
+    list.append([2, 2, 2])
     
     for item in list: print(item)
     # outputs 1 2 3 4 5 2 2 2
@@ -23,7 +22,7 @@ fn test_append():
 fn test_map():
     fn square(num: Int) -> Int: return num * num
     
-    let list = List[Int]([2, 2, 2])
+    let list: List[Int] = [2, 2, 2]
     let squared = list.map[Int](square)
     
     for item in list: print(item)
@@ -33,7 +32,7 @@ fn test_map():
 fn test_fold():
     fn sum(acc: Int, val: Int) -> Int: return acc + val
     
-    let list = List[Int]([1, 2, 3])
+    let list: List[Int] = [1, 2, 3]
     let folded = list.fold[Int](0, sum)
     
     for item in list: print(item)
@@ -43,7 +42,7 @@ fn test_fold():
 fn test_filter():
     fn greater(num: Int) -> Bool: return num > 2
     
-    let list = List[Int]([1, 2, 3, 4])
+    let list: List[Int] = [1, 2, 3, 4]
     let filtered = list.filter(greater)
     
     for item in list: print(item)

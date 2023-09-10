@@ -104,17 +104,16 @@ fn main():
     spacer()
 
 fn test_append():
-    let test = List[Int]([2, 2, 2])
-    var list = List[Int]([1, 2, 3, 4])
+    var list: List[Int] = [1, 2, 3, 4]
     
     list.append(5)
-    list.append(test)
+    list.append([2, 2, 2])
     
     for item in list: print_no_newline(item, " ")
-    assert_list_eq(list, List[Int]([1, 2, 3, 4, 5, 2, 2, 2]))
+    assert_list_eq(list, [1, 2, 3, 4, 5, 2, 2, 2])
 
 fn test_copy():
-    let list = List[Int]([2, 2, 2])
+    let list: List[Int] = [2, 2, 2]
     let a_copy = list.copy()
     
     for item in a_copy: print_no_newline(item, " ")
@@ -123,31 +122,31 @@ fn test_copy():
 fn test_map():
     fn square(num: Int) -> Int: return num * num
     
-    let list = List[Int]([2, 2, 2])
+    let list: List[Int] = [2, 2, 2]
     let squared = list.map[Int](square)
     
     print("List:")
     for item in list: print_no_newline(item, " ")
     print("\nSquared:")
     for item in squared: print_no_newline(item, " ")
-    assert_list_eq(squared, List[Int]([4, 4, 4]))
+    assert_list_eq(squared, [4, 4, 4])
 
 fn test_filter():
     fn greater(num: Int) -> Bool: return num > 2
     
-    let list = List[Int]([1, 2, 3, 4])
+    let list: List[Int] = [1, 2, 3, 4]
     let filtered = list.filter(greater)
     
     print("List:")
     for item in list: print_no_newline(item, " ")
     print("\nFiltered:")
     for item in filtered: print_no_newline(item, " ")
-    assert_list_eq(filtered, List[Int]([3, 4]))
+    assert_list_eq(filtered, [3, 4])
 
 fn test_fold():
     fn sum(acc: Int, val: Int) -> Int: return acc + val
     
-    let list = List[Int]([1, 2, 3])
+    let list: List[Int] = [1, 2, 3]
     let folded = list.fold[Int](0, sum)
     
     print("List:")
@@ -157,40 +156,40 @@ fn test_fold():
     assert_true(folded == 6)
 
 fn test_reversed():
-    let list = List[Int]([1, 2, 3])
+    let list: List[Int] = [1, 2, 3]
     let reversed = list.reversed()
     
     print("List:")
     for item in list: print_no_newline(item, " ")
     print("\nReversed:")
     for item in reversed: print_no_newline(item, " ")
-    assert_list_eq(reversed, List[Int]([3, 2, 1]))
+    assert_list_eq(reversed, [3, 2, 1])
 
 fn test_zip():
     fn multiply(left: Int, right: Int) -> Int: return left * right
     
-    let list1 = List[Int]([1, 2, 3])
-    let list2 = List[Int]([1, 4, 8])
+    let list1: List[Int] = [1, 2, 3]
+    let list2: List[Int] = [1, 4, 8]
     
     let list3 = list1.zip[Int, Int](list2, multiply)
     
     for item in list3: print_no_newline(item, " ")
-    assert_list_eq(list3, List[Int]([1, 8, 24]))
+    assert_list_eq(list3, [1, 8, 24])
 
 fn test_prefix():    
-    let list = List[Int]([1, 2, 3, 4, 5, 6, 7, 8])
+    let list: List[Int] = [1, 2, 3, 4, 5, 6, 7, 8]
     
     let first_three = list.prefix(3)
     
     for item in first_three: print_no_newline(item, " ")
-    assert_list_eq(first_three, List[Int]([1, 2, 3]))
+    assert_list_eq(first_three, [1, 2, 3])
 
 fn test_insert():    
-    var list = List[Int]([1, 3, 4, 5])
+    var list: List[Int] = [1, 3, 4, 5]
     list.insert(2, 1)
     
     for item in list: print_no_newline(item, " ")
-    assert_list_eq(list, List[Int]([1, 2, 3, 4, 5]))
+    assert_list_eq(list, [1, 2, 3, 4, 5])
 
 fn test_maybe():
     fn try_print(value: Int): print(value)
@@ -206,7 +205,7 @@ fn test_maybe():
     none.if_none(handle_none)
 
 fn test_remove():
-    var list = List[Int]([1, 4, 2, 3, 4, 5, 6])
+    var list: List[Int] = [1, 4, 2, 3, 4, 5, 6]
     
     print("List:")
     for item in list: print_no_newline(item, " ")
@@ -215,10 +214,10 @@ fn test_remove():
     
     print("\nNew:")
     for item in list: print_no_newline(item, " ")
-    assert_list_eq(list, List[Int]([1, 2, 3, 4, 5, 6]))
+    assert_list_eq(list, [1, 2, 3, 4, 5, 6])
 
 fn test_remove_last():
-    var list = List[Int]([1, 2, 3])
+    var list: List[Int] = [1, 2, 3]
     
     print("List:")
     for item in list: print_no_newline(item, " ")
@@ -230,10 +229,10 @@ fn test_remove_last():
     assert_true(last == 3)
     print("\nModified List:")
     for item in list: print_no_newline(item, " ")
-    assert_list_eq(list, List[Int]([1, 2]))
+    assert_list_eq(list, [1, 2])
 
 fn test_swap_remove():
-    var list = List[Int]([1, 2, 3, 4])
+    var list: List[Int] = [1, 2, 3, 4]
     
     print("List:")
     for item in list: print_no_newline(item, " ")
@@ -242,4 +241,4 @@ fn test_swap_remove():
     
     print("\nNew:")
     for item in list: print_no_newline(item, " ")
-    assert_list_eq(list, List[Int]([1, 4, 3]))
+    assert_list_eq(list, [1, 4, 3])
