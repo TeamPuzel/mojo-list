@@ -90,6 +90,14 @@ fn main():
     test_name("INSERT")
     test_insert()
     spacer()
+    
+    test_name("REMOVE")
+    test_remove()
+    spacer()
+    
+    test_name("REMOVE LAST")
+    test_remove_last()
+    spacer()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -192,3 +200,30 @@ fn test_maybe():
     
     wrapped.if_none(handle_none)
     none.if_none(handle_none)
+
+fn test_remove():
+    var list = List[Int]([1, 4, 2, 3, 4, 5, 6])
+    
+    print("List:")
+    for item in list: print_no_newline(item, " ")
+    
+    list.remove(1)
+    
+    print("\nNew:")
+    for item in list: print_no_newline(item, " ")
+    assert_list_eq(list, List[Int]([1, 2, 3, 4, 5, 6]))
+
+fn test_remove_last():
+    var list = List[Int]([1, 2, 3])
+    
+    print("List:")
+    for item in list: print_no_newline(item, " ")
+    
+    let last = list.remove_last()
+    
+    print("\nLast:")
+    print_no_newline(last)
+    assert_true(last == 3)
+    print("\nModified List:")
+    for item in list: print_no_newline(item, " ")
+    assert_list_eq(list, List[Int]([1, 2]))

@@ -135,25 +135,31 @@ struct List[T: AnyType]:
     fn append(inout self, list: List[T]):
         for item in list: self.append(item)
     
-    fn drop_last(inout self):
-        self.count -= 1
+    @always_inline
+    fn drop_last(inout self): self.count -= 1
     
     fn remove_last(inout self) -> T:
         self.count -= 1
         return self[self.count]
     
     fn remove(inout self, at: Int):
-        for i in range(at, self.last_index()):
-            self[i - 1] = self[i]
+        let last = self.last_index()
         self.count -= 1
+        for i in range(at, last):
+            if i == last: continue
+            self[i] = self[i + 1]
+    
+    fn swap_remove(inout self, at: Int):
+        self[at] = self[self.last_index()]
+        self.drop_last()
     
     fn insert(inout self, value: T, at: Int):
-        self.unsafe_shift_right(at, 1)
+        self.unsafe_shift_right(at)
         self[at] = value
     
-    fn unsafe_shift_right(inout self, `from`: Int, by: Int):
-        let new_count = self.count + by
-        if self.capacity <= new_count: self.resize(new_count) 
+    fn unsafe_shift_right(inout self, `from`: Int):
+        let new_count = self.count + 1
+        if self.capacity <= new_count: self.resize(new_count)
         self.count = new_count
         for i in range(self.last_index(), `from` - 1, -1):
             if i == self.last_index(): continue
