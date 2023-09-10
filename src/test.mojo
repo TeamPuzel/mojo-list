@@ -98,6 +98,10 @@ fn main():
     test_name("REMOVE LAST")
     test_remove_last()
     spacer()
+    
+    test_name("SWAP REMOVE")
+    test_swap_remove()
+    spacer()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -207,7 +211,7 @@ fn test_remove():
     print("List:")
     for item in list: print_no_newline(item, " ")
     
-    list.remove(1)
+    _ = list.remove(1)
     
     print("\nNew:")
     for item in list: print_no_newline(item, " ")
@@ -227,3 +231,15 @@ fn test_remove_last():
     print("\nModified List:")
     for item in list: print_no_newline(item, " ")
     assert_list_eq(list, List[Int]([1, 2]))
+
+fn test_swap_remove():
+    var list = List[Int]([1, 2, 3, 4])
+    
+    print("List:")
+    for item in list: print_no_newline(item, " ")
+    
+    _ = list.swap_remove(1)
+    
+    print("\nNew:")
+    for item in list: print_no_newline(item, " ")
+    assert_list_eq(list, List[Int]([1, 4, 3]))

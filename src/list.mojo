@@ -142,15 +142,19 @@ struct List[T: AnyType]:
         self.count -= 1
         return self[self.count]
     
-    fn remove(inout self, at: Int):
+    fn remove(inout self, at: Int) -> T:
+        let ret = self[at]
         let last = self.last_index()
         self.count -= 1
         for i in range(at, last):
             self[i] = self[i + 1]
+        return ret
     
-    fn swap_remove(inout self, at: Int):
+    # A faster version of remove, does not need to shift elements.
+    # It does so at the cost of changing the order of elements.
+    fn swap_remove(inout self, at: Int) -> T:
         self[at] = self[self.last_index()]
-        self.drop_last()
+        return self.remove_last()
     
     fn insert(inout self, value: T, at: Int):
         self.unsafe_shift_right(at)
