@@ -77,6 +77,10 @@ struct List[T: AnyType]:
     #         if self[i] == rhs[i]: return False
     #     return True
     
+    # REQUIRES(Traits) where T: Ord
+    # fn sort():
+    # fn sorted() -> Self:
+    
     fn subrange(self, `from`: Int, count: Int) -> Self:
         var buf = Self()
         buf.reserve_capacity(self.count)
