@@ -242,3 +242,10 @@ fn test_swap_remove():
     print("\nNew:")
     for item in list: print_no_newline(item, " ")
     assert_list_eq(list, [1, 4, 3])
+
+#fn test_enumerate():
+#    var list: List[Int] = [1, 2, 3, 4]
+#    
+#    for item in list.enumerated():
+#        print(item[0])
+#        print(item[1])

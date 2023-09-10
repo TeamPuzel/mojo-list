@@ -63,12 +63,12 @@ struct List[T: AnyType]:
     fn is_empty(self) -> Bool: return self.count == 0
     
     # Note this is not especially efficient without the lazy list
-    fn enumerated(self) -> List[(Int, T)]:
-        var buf = List[(Int, T)]()
-        buf.reserve_capacity(self.count)
-        for i in range(self.count):
-            buf.append((i, self[i]))
-        return buf^
+    # fn enumerated(self) -> List[(Int, T)]:
+    #     var buf = List[(Int, T)]()
+    #     buf.reserve_capacity(self.count)
+    #     for i in range(self.count):
+    #         buf.append((i, self[i]))
+    #     return buf^
     
     # REQUIRES(Traits) where T: Eq
     # fn __eq__(self, rhs: Self) -> Bool:
@@ -254,7 +254,7 @@ struct List[T: AnyType]:
         for i in range(least):
             buf.append(body(`with`[i], self[i]))
         return buf^
-            
+
 struct ListIterator[T: AnyType]:
     var offset: Int
     var max: Int
