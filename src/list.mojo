@@ -8,6 +8,7 @@ from maybe import Maybe
 # [ ] - Optimize many of the methods
 # [ ] - Implement a lazy list to help avoid copying
 # [ ] - Implement a Slice type
+# [ ] - Implement copy on write
 
 struct List[T: AnyType]:
     var storage: RcPointer[T]
@@ -58,6 +59,7 @@ struct List[T: AnyType]:
         for item in self: new.append(item)
         return new^
     
+    @always_inline
     fn is_empty(self) -> Bool: return self.count == 0
     
     # Note this is not especially efficient without the lazy list
@@ -85,6 +87,10 @@ struct List[T: AnyType]:
     @always_inline
     fn prefix(self, count: Int) -> Self:
         return self.subrange(0, count)
+    
+    @always_inline
+    fn suffix(self, count: Int) -> Self:
+        return self.subrange(self.last_index() - count, self.last_index())
     
     fn first(self, where: fn(T) -> Bool) -> Maybe[T]:
         for item in self:
@@ -142,11 +148,16 @@ struct List[T: AnyType]:
         self.count -= 1
     
     fn insert(inout self, value: T, at: Int):
-        if self.count >= self.capacity: self.resize(self.capacity * 2)
-        for i in range(self.last_index(), at):
-            self[i + 1] = self[i]
+        self.unsafe_shift_right(at, 1)
         self[at] = value
-        self.count += 1
+    
+    fn unsafe_shift_right(inout self, `from`: Int, by: Int):
+        let new_count = self.count + by
+        if self.capacity <= new_count: self.resize(new_count) 
+        self.count = new_count
+        for i in range(self.last_index(), `from` - 1, -1):
+            if i == self.last_index(): continue
+            self[i + 1] = self[i]
     
     fn first(self) -> T: return self[0]
     fn last(self) -> T: return self[self.last_index()]

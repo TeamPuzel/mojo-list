@@ -174,11 +174,11 @@ fn test_prefix():
     assert_list_eq(first_three, List[Int]([1, 2, 3]))
 
 fn test_insert():    
-    var list = List[Int]([1, 3])
+    var list = List[Int]([1, 3, 4, 5])
     list.insert(2, 1)
     
     for item in list: print_no_newline(item, " ")
-    assert_list_eq(list, List[Int]([1, 2, 3]))
+    assert_list_eq(list, List[Int]([1, 2, 3, 4, 5]))
 
 fn test_maybe():
     fn try_print(value: Int): print(value)
