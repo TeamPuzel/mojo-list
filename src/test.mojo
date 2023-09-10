@@ -86,6 +86,10 @@ fn main():
     test_name("PREFIX")
     test_prefix()
     spacer()
+    
+    test_name("INSERT")
+    test_insert()
+    spacer()
 
 fn test_append():
     let test = List[Int]([2, 2, 2])
@@ -168,6 +172,13 @@ fn test_prefix():
     
     for item in first_three: print_no_newline(item, " ")
     assert_list_eq(first_three, List[Int]([1, 2, 3]))
+
+fn test_insert():    
+    var list = List[Int]([1, 3])
+    list.insert(2, 1)
+    
+    for item in list: print_no_newline(item, " ")
+    assert_list_eq(list, List[Int]([1, 2, 3]))
 
 fn test_maybe():
     fn try_print(value: Int): print(value)
